@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - ground
+  - player
+  - enemy
+  - trigger
+  - pl_projectile
+  - boss
   layers:
   - Default
   - TransparentFX
