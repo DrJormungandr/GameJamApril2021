@@ -11,10 +11,12 @@ public class DumbAi : MonoBehaviour
     public GameObject player;
     public bool playerSpotted = false;
     public bool returntoDefault = false;
+    private Rigidbody2D rigidBody;
     private Vector2 defaultPosition;
     void Start()
     {
         defaultPosition = transform.position;
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -23,12 +25,12 @@ public class DumbAi : MonoBehaviour
 
         if (playerSpotted)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
         }
 
         if (returntoDefault && !playerSpotted)
         {
-            transform.position = Vector2.MoveTowards(transform.position, defaultPosition, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(defaultPosition.x, transform.position.y), speed * Time.deltaTime);
         }
 
     }
