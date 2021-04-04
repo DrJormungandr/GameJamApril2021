@@ -28,7 +28,6 @@ public class EnemyBullet : MonoBehaviour
         }
         if (collision.tag == "player")
         {
-
             playerDied.Invoke();
         }
     }

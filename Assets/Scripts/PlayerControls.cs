@@ -11,6 +11,7 @@ public class PlayerControls : MonoBehaviour
     public float fireRate = 0.5F;
     private float nextFire = 0;
     private Rigidbody2D rigidbody;
+    private SpriteRenderer sprite;
     private int additionalJumps = 2;
     private GameObject killerLegs;
     private bool facingRight = true;
@@ -19,6 +20,7 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         killerLegs = gameObject.transform.GetChild(0).gameObject;
 
     }
@@ -29,10 +31,13 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetAxis("Horizontal") > 0)
         {
             facingRight = true;
+            sprite.flipX = false;
+            
         }
         if (Input.GetAxis("Horizontal") < 0)
         {
             facingRight = false;
+            sprite.flipY = true;
         }
 
       //  transform.Translate(new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0));
