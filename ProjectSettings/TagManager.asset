@@ -10,6 +10,7 @@ TagManager:
   - trigger
   - pl_projectile
   - boss
+  - enemy_bullet
   layers:
   - Default
   - TransparentFX

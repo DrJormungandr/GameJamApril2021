@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerControls : MonoBehaviour
     public GameObject bulletPrefab;
     public float fireRate = 0.5F;
     private float nextFire = 0;
+    public UnityEvent playerDied;
     private Rigidbody2D rigidbody;
     private SpriteRenderer sprite;
     private int additionalJumps = 2;
@@ -37,7 +39,7 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetAxis("Horizontal") < 0)
         {
             facingRight = false;
-            sprite.flipY = true;
+            sprite.flipX = true;
         }
 
       //  transform.Translate(new Vector2(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0));
@@ -79,6 +81,35 @@ public class PlayerControls : MonoBehaviour
         else
         {
             killerLegs.SetActive(true);
+        }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Contains("enemy"))
+        {
+            playerDied.Invoke();
+        }
+        if (collision.gameObject.tag == "puddle")
+        {
+            playerDied.Invoke();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Contains("enemy"))
+        {
+            playerDied.Invoke();
+        }
+        if (collision.gameObject.tag == "puddle")
+        {
+            playerDied.Invoke();
+        }
+        if (collision.gameObject.tag == "boss")
+        {
+            playerDied.Invoke();
         }
     }
 

@@ -17,7 +17,7 @@ public class CoinManager : MonoBehaviour
         
     }
 
-    void addCoin()
+    public void addCoin()
     {
         coins++;
     }

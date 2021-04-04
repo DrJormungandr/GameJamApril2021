@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: placeholder
+  lastCheckpoint: {x: 0, y: 0}
+  playerDeathSound: {fileID: 0}
+  player: {fileID: 0}

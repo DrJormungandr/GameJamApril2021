@@ -19,7 +19,10 @@ public class GroundDetection : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        onGround = true;
+        if (collision.gameObject.tag != "coin")
+        {
+            onGround = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

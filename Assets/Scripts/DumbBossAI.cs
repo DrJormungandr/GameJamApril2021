@@ -48,9 +48,17 @@ public class DumbBossAI : MonoBehaviour
             bossHealth -= bossDamamedByHp;
             Destroy(collision.gameObject);
         }
-
-
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "pl_projectile")
+        {
+            bossHealth -= bossDamamedByHp;
+            Destroy(collision.gameObject);
+        }
+    }
+
 
     IEnumerator DecisionMakingTime()
     {

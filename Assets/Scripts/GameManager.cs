@@ -6,16 +6,19 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public string levelName = "placeholder";
+    public Vector2 lastCheckpoint = new Vector2(0,0);
+    public AudioSource playerDeathSound;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-
+        lastCheckpoint = player.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(lastCheckpoint);
     }
 
     void nextLevel()
@@ -23,9 +26,18 @@ public class GameManager : MonoBehaviour
         //TODO SceneManager;
     }
 
-    void playerDied()
+    public void playerDied()
     {
-        SceneManager.LoadScene(levelName);
+        playerDeathSound.PlayOneShot(playerDeathSound.clip);
+        player.GetComponent<PlayerControls>().enabled = false;
+        StartCoroutine(playerDeath());
+    }
+
+    IEnumerator playerDeath()
+    {
+        yield return new WaitForSeconds(2);
+        player.transform.position = lastCheckpoint;
+        player.GetComponent<PlayerControls>().enabled = true;
     }
 
 }
