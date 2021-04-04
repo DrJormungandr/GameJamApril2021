@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Bullet : MonoBehaviour
 {
     public int speed = 3;
     public float timetoLive = 3;
+    public UnityEvent enemyDied;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,7 @@ public class Bullet : MonoBehaviour
 
         if (collision.gameObject.tag.Contains("enemy"))
         {
+            enemyDied.Invoke();
             Destroy(collision.gameObject);
         }
     }

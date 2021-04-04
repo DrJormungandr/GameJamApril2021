@@ -11,17 +11,20 @@ public class DumbBossAI : MonoBehaviour
     public int secondsBetweenAttackSeries = 5;
     public int secondsBetweenAttacks = 2;
     public int numberOfAttacks = 5;
+    public float deathDelay = 1;
     public List<Vector2> spawnPoints = new List<Vector2>();
     public UnityEvent bossDead;
     public GameObject bossBullet;
 
     private bool seriesStarted = false;
-    private bool attack = false;
+    AudioSource battleStartedSound;
+    AudioSource bossDamagedSound;
+    AudioSource bossDefeatedSound;
     private Vector2 currentAttackSpawn; 
 
     void Start()
     {
-        seriesStarted = true;
+        
     }
 
     // Update is called once per frame
@@ -30,6 +33,8 @@ public class DumbBossAI : MonoBehaviour
         if (bossHealth <= 0)
         {
             bossDead.Invoke();
+            StartCoroutine(bossDying());
+            Destroy(gameObject);
         }
 
         if (seriesStarted)
@@ -38,6 +43,15 @@ public class DumbBossAI : MonoBehaviour
             StartCoroutine(DecisionMakingTime());
         }
 
+    }
+
+
+    IEnumerator bossDying()
+    {
+        bossDefeatedSound.PlayOneShot(bossDefeatedSound.clip);
+        yield return new WaitForSeconds(deathDelay);
+        bossDead.Invoke();
+        Destroy(gameObject);
     }
 
 
@@ -54,6 +68,7 @@ public class DumbBossAI : MonoBehaviour
     {
         if (collision.gameObject.tag == "pl_projectile")
         {
+            bossDamagedSound.PlayOneShot(bossDamagedSound.clip);
             bossHealth -= bossDamamedByHp;
             Destroy(collision.gameObject);
         }
@@ -75,9 +90,13 @@ public class DumbBossAI : MonoBehaviour
             currentAttackSpawn = spawnPoints[spawnPointIndex];
             Instantiate(bossBullet, currentAttackSpawn, new Quaternion());
             yield return new WaitForSeconds(secondsBetweenAttacks);
-            Debug.Log(currentAttackSpawn);
         }
         seriesStarted = true;
+    }
+
+    public void battleStarted()
+    {
+        battleStartedSound.PlayOneShot(battleStartedSound.clip);
     }
 
 }
