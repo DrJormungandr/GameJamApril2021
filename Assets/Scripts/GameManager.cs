@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public string levelName = "placeholder";
     public Vector2 lastCheckpoint = new Vector2(0,0);
+    public float victoryDelay = 2;
     public AudioSource playerDeathSound;
     public AudioSource spawnSound;
     public AudioSource enemyDiedSound;
+    public AudioSource victorySound;
     public GameObject player;
 
     // Start is called before the first frame update
@@ -25,10 +27,20 @@ public class GameManager : MonoBehaviour
         Debug.Log(lastCheckpoint);
     }
 
-    void nextLevel()
+    public void Victory()
     {
-        //TODO SceneManager;
+        StartCoroutine(victoryWithDelay());
     }
+
+    IEnumerator victoryWithDelay()
+    {
+        player.GetComponent<PlayerControls>().idleSound.Stop();
+        yield return new WaitForSeconds(victoryDelay);
+        victorySound.PlayOneShot(victorySound.clip);
+        yield return new WaitForSeconds(victorySound.clip.length);
+        SceneManager.LoadScene("MainMenu");
+    }
+
 
     public void playerDied()
     {
@@ -45,8 +57,7 @@ public class GameManager : MonoBehaviour
     IEnumerator playerDeath()
     {
         yield return new WaitForSeconds(2);
-        player.transform.position = lastCheckpoint;
-        spawnSound.PlayOneShot(spawnSound.clip);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         player.GetComponent<PlayerControls>().enabled = true;
     }
 

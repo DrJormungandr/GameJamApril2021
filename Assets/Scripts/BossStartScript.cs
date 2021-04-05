@@ -5,7 +5,10 @@ using UnityEngine.Events;
 
 public class BossStartScript : MonoBehaviour
 {
-    UnityEvent BossBattleStart;
+    public UnityEvent BossBattleStart;
+    public GameObject camera;
+    public GameObject player;
+    public AudioClip clip;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +23,14 @@ public class BossStartScript : MonoBehaviour
 
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {   
+    {
+        var audio = player.GetComponent<PlayerControls>().idleSound;
+        audio.Stop();
+        audio.clip = clip;
+        audio.Play();
         BossBattleStart.Invoke();
+        camera.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 
 }

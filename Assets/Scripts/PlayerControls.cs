@@ -122,16 +122,23 @@ public class PlayerControls : MonoBehaviour
     {
         if (collision.gameObject.tag.Contains("enemy"))
         {
-            playerDied.Invoke();
+            death();
         }
         if (collision.gameObject.tag == "puddle")
         {
-            playerDied.Invoke();
+            death();
         }
         if (collision.gameObject.tag == "boss")
         {
-            playerDied.Invoke();
+            death();
         }
+    }
+
+    private void death()
+    {
+        rigidbody.velocity = new Vector2(0,0);
+        gameObject.active = false;
+        playerDied.Invoke();
     }
 
     private void FixedUpdate()

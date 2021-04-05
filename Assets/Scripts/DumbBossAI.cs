@@ -17,9 +17,9 @@ public class DumbBossAI : MonoBehaviour
     public GameObject bossBullet;
 
     private bool seriesStarted = false;
-    AudioSource battleStartedSound;
-    AudioSource bossDamagedSound;
-    AudioSource bossDefeatedSound;
+    public AudioSource battleStartedSound;
+    public AudioSource bossDamagedSound;
+    public AudioSource bossDefeatedSound;
     private Vector2 currentAttackSpawn; 
 
     void Start()
@@ -97,6 +97,7 @@ public class DumbBossAI : MonoBehaviour
     public void battleStarted()
     {
         battleStartedSound.PlayOneShot(battleStartedSound.clip);
+        seriesStarted = true;
     }
 
 }

@@ -8,7 +8,7 @@ public class EnemyBullet : MonoBehaviour
     public int speed = 3;
     public float timetoLive = 3;
     // Start is called before the first frame update
-    UnityEvent playerDied;
+    public UnityEvent playerDied;
     void Start()
     {
         Destroy(gameObject, timetoLive);
